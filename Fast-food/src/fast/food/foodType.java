@@ -16,4 +16,12 @@ public class foodType {
     private double weight;            // in grams
     private LocalDate bestBefore;     // max 2 weeks from today
     private LocalDateTime timePlaced; // set automatically when created
+
+
+     public FoodItem(String name, double weight, LocalDate bestBefore) {
+        this.name = name;
+        this.weight = weight;
+        this.bestBefore = bestBefore;
+        this.timePlaced = LocalDateTime.now();
+    }
 }
