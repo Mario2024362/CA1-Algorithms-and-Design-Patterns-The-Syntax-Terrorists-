@@ -4,6 +4,8 @@
  */
 package fast.food;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Mario Cornejo
@@ -16,7 +18,9 @@ public class FastFood {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-   
+    Scanner sc = new Scanner(System.in);
+        Storage storage = new Storage();
+        boolean running = true;
     }
     
 }
