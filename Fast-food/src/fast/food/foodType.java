@@ -6,6 +6,7 @@ package fast.food;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -24,4 +25,18 @@ public class foodType {
         this.bestBefore = bestBefore;
         this.timePlaced = LocalDateTime.now();
     }
+
+
+    public String getName() {
+        return name;
+    }
+
+
+     @Override
+    public String toString() {
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        return name + " | " + weight + "g | Best before: " + bestBefore
+                + " | Placed: " + timePlaced.format(f);
+    }
+
 }
