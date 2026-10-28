@@ -22,7 +22,16 @@ public class FastFood {
         Storage storage = new Storage(); //variable to input
         boolean running = true;
    
-
+while (running) {  //while for the chossing of the message depeding in the case
+            System.out.println("\n--- FOOD STORAGE MENU ---");
+            System.out.println("1. Add food item");
+            System.out.println("2. Remove from front");
+            System.out.println("3. Remove from back");
+            System.out.println("4. Show top item (peek)");
+            System.out.println("5. Display all");
+            System.out.println("6. Search by name");
+            System.out.println("7. Exit");
+            System.out.print("Choose: ");
     }
     
 }
