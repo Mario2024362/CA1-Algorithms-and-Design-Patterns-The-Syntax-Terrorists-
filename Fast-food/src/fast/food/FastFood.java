@@ -17,9 +17,12 @@ public class FastFood {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
       Scanner scanner = new Scanner(System.in); //to make the input of data
-        FoodStorage storage = new FoodStorage(); //variable to input
- 
+        Storage storage = new Storage(); //variable to input
+        boolean running = true;
+   
+
     }
     
 }
