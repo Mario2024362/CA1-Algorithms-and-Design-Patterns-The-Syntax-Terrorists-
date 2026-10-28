@@ -21,4 +21,21 @@ public class Storage {
         System.out.println("Added: " + item);
         return true;
     }
+    // Remove from the FRONT (same side as adding) - O(1)
+    public void removeFront() {
+        if (storage.isEmpty()) {
+            System.out.println("Error: storage is empty.");
+            return;
+        }
+        System.out.println("Removed from front: " + storage.removeFirst());
+    }
+
+    // Remove from the BACK (opposite side) - O(1)
+    public void removeBack() {
+        if (storage.isEmpty()) {
+            System.out.println("Error: storage is empty.");
+            return;
+        }
+        System.out.println("Removed from back: " + storage.removeLast());
+    }
 }
