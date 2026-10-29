@@ -4,15 +4,19 @@
  */
 package fast.food;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 /**
  *
  * @author Mario Cornejo
  */
 public class Storage {
     private static final int MAX_CAPACITY = 8;
+    private Deque<FoodItem> storage = new ArrayDeque<>();
 
      // Add at the FRONT - O(1)
-    public boolean add(FoodItem item) {
+    public boolean add(foodType item) {
         if (storage.size() >= MAX_CAPACITY) {
             System.out.println("Error: storage is full (max " + MAX_CAPACITY + ").");
             return false;
