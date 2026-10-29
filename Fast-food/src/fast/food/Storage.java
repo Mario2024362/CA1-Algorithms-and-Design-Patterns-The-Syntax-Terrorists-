@@ -42,4 +42,24 @@ public class Storage {
         }
         System.out.println("Removed from back: " + storage.removeLast());
     }
+    // Show the item at the top (front) without removing it - O(1)
+    public void peek() {
+        if (storage.isEmpty()) {
+            System.out.println("Error: storage is empty.");
+            return;
+        }
+        System.out.println("Top item: " + storage.peekFirst().getName());
+    }
+
+    // Show all items - O(n)
+    public void display() {
+        if (storage.isEmpty()) {
+            System.out.println("Error: storage is empty.");
+            return;
+        }
+        int i = 1;
+        for (FoodItem item : storage) {
+            System.out.println(i++ + ". " + item);
+        }
+    }
 }
