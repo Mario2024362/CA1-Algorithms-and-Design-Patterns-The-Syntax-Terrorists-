@@ -16,7 +16,7 @@ public class Storage {
     private Deque<FoodItem> storage = new ArrayDeque<>();
 
      // Add at the FRONT - O(1)
-    public boolean add(foodType item) {
+    public boolean add(FoodItem item) {
         if (storage.size() >= MAX_CAPACITY) {
             System.out.println("Error: storage is full (max " + MAX_CAPACITY + ").");
             return false;
@@ -60,6 +60,23 @@ public class Storage {
         int i = 1;
         for (FoodItem item : storage) {
             System.out.println(i++ + ". " + item);
+        }
+    }
+    // Search by name - O(n)
+    public void search(String name) {
+        if (storage.isEmpty()) {
+            System.out.println("Error: storage is empty.");
+            return;
+        }
+        boolean found = false;
+        for (FoodItem item : storage) {
+            if (item.getName().equalsIgnoreCase(name)) {
+                System.out.println("Found: " + item);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println(name + " not found.");
         }
     }
 }
