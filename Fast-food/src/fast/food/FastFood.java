@@ -76,3 +76,35 @@ while (running) {  //while for the chossing of the message depeding in the case
         }
        
 }
+// Asking for the details for the check and then add
+    static void addFood(Scanner scanner, Storage storage) {
+        if (storage.isFull()) {
+            System.out.println("Storage is full!");
+            return;
+        }
+
+        System.out.print("Name (Burger, Pizza, Fries, Sandwich, Hotdog): ");
+        String name = validName(scanner.nextLine().trim());
+        if (name == null) {
+            System.out.println("Invalid food name!");
+            return;
+        }
+
+        System.out.print("Weight (grams): ");
+        double weight = validWeight(scanner.nextLine().trim());
+        if (weight == -1) {
+            System.out.println("Weight must be a number above 0!");
+            return;
+        }
+
+        System.out.print("Best-before (YYYY-MM-DD, max 2 weeks): ");
+        LocalDate date = validDate(scanner.nextLine().trim());
+        if (date == null) {
+            System.out.println("Invalid date! Use YYYY-MM-DD, within 2 weeks from today.");
+            return;
+        }
+
+        storage.addFront(new FoodItem(name, weight, date));
+        System.out.println(name + " added.");
+}
+}
