@@ -4,6 +4,7 @@
  */
 package fast.food;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
@@ -34,7 +35,7 @@ while (running) {  //while for the chossing of the message depeding in the case
             System.out.print("Choose: ");
             
             String choice = scanner.nextLine().trim(); // read the choice that was made
-    }
+    
    switch (choice) {
                 case "1":
                     addFood(scanner, storage);
@@ -46,7 +47,7 @@ while (running) {  //while for the chossing of the message depeding in the case
                     showRemoved(storage.removeBack(), "back");
                     break;
                 case "4":
-                    FoodItem top = storage.peek();
+                    foodType top = storage.peek();
                     if (top == null) {
                         System.out.println("Empty");
                     } else {
@@ -59,7 +60,7 @@ while (running) {  //while for the chossing of the message depeding in the case
                 case "6":
                     System.out.print("Name to search: ");
                     String name = scanner.nextLine().trim();
-                    FoodItem found = storage.search(name);
+                    foodType found = storage.search(name);
                     if (found == null) {
                         System.out.println(name + " not found.");
                     } else {
@@ -71,11 +72,24 @@ while (running) {  //while for the chossing of the message depeding in the case
                     running = false;
                     break;
                 default:
-                    System.out.println("Invalid choice, try again.");
+                    System.out.println("Choice is not correct");
             }
         }
+scanner.close();
        
 }
+   static void showRemoved(foodType item, String where){
+   if(item==null){
+       System.out.println("Storage is empty");
+   
+   }else{
+   
+       System.out.println(item.getName()+"removed"+where) ;
+   }
+   
+   }
+
+
 // Asking for the details for the check and then add
     static void addFood(Scanner scanner, Storage storage) {
         if (storage.isFull()) {
@@ -100,11 +114,47 @@ while (running) {  //while for the chossing of the message depeding in the case
         System.out.print("Best-before (YYYY-MM-DD, max 2 weeks): ");
         LocalDate date = validDate(scanner.nextLine().trim());
         if (date == null) {
-            System.out.println("Invalid date! Use YYYY-MM-DD, within 2 weeks from today.");
+            System.out.println("Date is not valid. Use YYYY-MM-DD, using 2 weeks from today.");
             return;
         }
 
-        storage.addFront(new FoodItem(name, weight, date));
+        storage.addFront(new foodType(name, weight, date));
         System.out.println(name + " added.");
 }
+
+// Returns the food name, or null if it is not one of the 5 foods
+    static String validName(String text) {
+        String[] foods = {"Burger", "Pizza", "Fries", "Sandwich", "Hotdog"};
+        for (String food : foods) {
+            if (food.equalsIgnoreCase(text)) {
+                return food;
+            }
+        }
+        return null;
+    }
+
+    // Returns the weight, or -1 if it is not a number above 0
+    static double validWeight(String text) {
+        try {
+            double weight = Double.parseDouble(text);
+            if (weight > 0) {
+                return weight;
+            }
+        } catch (NumberFormatException e) {
+        }
+        return -1;
+    }
+
+    // Returns the date, or null if the format is wrong or it is not within 2 weeks
+    static LocalDate validDate(String text) {
+        try {
+            LocalDate date = LocalDate.parse(text);
+            if (!date.isBefore(LocalDate.now()) && !date.isAfter(LocalDate.now().plusWeeks(2))) {
+                return date;
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
 }
