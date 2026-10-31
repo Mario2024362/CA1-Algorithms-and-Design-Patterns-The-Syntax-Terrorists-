@@ -2,81 +2,104 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package fast.food;
-
-import java.util.ArrayDeque;
-import java.util.Deque;
+package test;
 
 /**
  *
  * @author Mario Cornejo
  */
-public class Storage {
-    private static final int MAX_CAPACITY = 8;
-    private Deque<FoodItem> storage = new ArrayDeque<>();
 
-     // Add at the FRONT - O(1)
-    public boolean add(FoodItem item) {
-        if (storage.size() >= MAX_CAPACITY) {
-            System.out.println("Error: storage is full (max " + MAX_CAPACITY + ").");
+// Interface: the operations the storage must have
+interface StorageOperations {
+    boolean isEmpty();
+    boolean isFull();
+    int size();
+    boolean addFront(FoodItem item);  // false if full
+    FoodItem removeFront();           // null if empty
+    FoodItem removeBack();            // null if empty
+    FoodItem peek();                  // null if empty
+    FoodItem search(String name);     // null if not found
+    void display();
+}
+// double-ended queue: this add at the front, remove from the front or the back.
+// Max 8 items. The array is circular: after  7 it goes back to  0.
+public class Storage implements StorageOperations {
+    private static final int MAX = 8;
+    private FoodItem[] items = new FoodItem[MAX];
+    private int front = 0; // where the front item is
+    private int count = 0; // how many items are stored
+
+    public boolean isEmpty() {
+        return count == 0;
+    }
+
+    public boolean isFull() {
+        return count == MAX;
+    }
+
+    public int size() {
+        return count;
+    }
+
+    // add at the FRONT  - O(1)
+    public boolean addFront(FoodItem item) {
+        if (isFull()) {
             return false;
         }
-        storage.addFirst(item);
-        System.out.println("Added: " + item);
+        front = (front - 1 + MAX) % MAX;
+        items[front] = item;
+        count++;
         return true;
     }
-    // Remove from the FRONT (same side as adding) - O(1)
-    public void removeFront() {
-        if (storage.isEmpty()) {
-            System.out.println("Error: storage is empty.");
-            return;
+
+    // Remove from the front - O(1)
+    public FoodItem removeFront() {
+        if (isEmpty()) {
+            return null;
         }
-        System.out.println("Removed from front: " + storage.removeFirst());
+        FoodItem item = items[front];
+        items[front] = null;
+        front = (front + 1) % MAX;
+        count--;
+        return item;
+    }
+    // remove from the back O(1)
+    public FoodItem removeBack() {
+        if (isEmpty()) {
+            return null;
+        }
+        int back = (front + count - 1) % MAX;
+        FoodItem item = items[back];
+        items[back] = null;
+        count--;
+        return item;
     }
 
-    // Remove from the BACK (opposite side) - O(1)
-    public void removeBack() {
-        if (storage.isEmpty()) {
-            System.out.println("Error: storage is empty.");
-            return;
+    // Look at the front item
+    public FoodItem peek() {
+        if (isEmpty()) {
+            return null;
         }
-        System.out.println("Removed from back: " + storage.removeLast());
+        return items[front];
     }
-    // Show the item at the top (front) without removing it - O(1)
-    public void peek() {
-        if (storage.isEmpty()) {
-            System.out.println("Error: storage is empty.");
-            return;
-        }
-        System.out.println("Top item: " + storage.peekFirst().getName());
-    }
-
-    // Show all items - O(n)
-    public void display() {
-        if (storage.isEmpty()) {
-            System.out.println("Error: storage is empty.");
-            return;
-        }
-        int i = 1;
-        for (FoodItem item : storage) {
-            System.out.println(i++ + ". " + item);
-        }
-    }
-    // Search by name - O(n)
-    public void search(String name) {
-        if (storage.isEmpty()) {
-            System.out.println("Error: storage is empty.");
-            return;
-        }
-        boolean found = false;
-        for (FoodItem item : storage) {
+    // linear search
+     public FoodItem search(String name) {
+        for (int i = 0; i < count; i++) {
+            FoodItem item = items[(front + i) % MAX];
             if (item.getName().equalsIgnoreCase(name)) {
-                System.out.println("Found: " + item);
-                found = true;
+                return item;
             }
         }
-        if (!found) {
-            System.out.println(name + " not found.");
+        return null;
+    }
+    //show all items front to back 
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Storage is empty!");
+            return;
+        }
+        for (int i = 0; i < count; i++) {
+            System.out.println((i + 1) + ". " + items[(front + i) % MAX]);
         }
     }
 }
