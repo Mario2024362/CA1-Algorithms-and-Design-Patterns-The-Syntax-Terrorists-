@@ -12,6 +12,25 @@ import java.time.format.DateTimeFormatter;
  *
  * @author Mario Cornejo
  */
+//the food that will be storage with the detailes
+class Food {
+    private String name;
+    private double weight; //is in grams
+
+    public Food(String name, double weight) {
+        this.name = name;
+        this.weight = weight;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return name + " | " + weight + "g";
+    }
+}
 public class foodType {
      private String name;
     private double weight;            // in grams
@@ -19,7 +38,7 @@ public class foodType {
     private LocalDateTime timePlaced; // set automatically when created
 
 
-     public FoodItem(String name, double weight, LocalDate bestBefore) {
+     public foodType(String name, double weight, LocalDate bestBefore) {
         this.name = name;
         this.weight = weight;
         this.bestBefore = bestBefore;
