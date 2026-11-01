@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author Mario Cornejo
  */
-//the food that will be storage with the detailes
+//the food that will be storage with the details
 class Food {
     private String name;
     private double weight; //is in grams
@@ -53,7 +53,8 @@ public class foodType {
 
      @Override
     public String toString() {
-        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        //reuse the parents text and add some extra details
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return name + " | " + weight + "g | Best before: " + bestBefore
                 + " | Placed: " + timePlaced.format(f);
     }

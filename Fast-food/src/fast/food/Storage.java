@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package test;
+package fast.food;
 
 /**
  *
@@ -14,18 +14,18 @@ interface StorageOperations {
     boolean isEmpty();
     boolean isFull();
     int size();
-    boolean addFront(FoodItem item);  // false if full
-    FoodItem removeFront();           // null if empty
-    FoodItem removeBack();            // null if empty
-    FoodItem peek();                  // null if empty
-    FoodItem search(String name);     // null if not found
+    boolean addFront(foodType item);  // false if full
+    foodType removeFront();           // null if empty
+    foodType removeBack();            // null if empty
+    foodType peek();                  // null if empty
+    foodType search(String name);     // null if not found
     void display();
 }
 // double-ended queue: this add at the front, remove from the front or the back.
 // Max 8 items. The array is circular: after  7 it goes back to  0.
 public class Storage implements StorageOperations {
     private static final int MAX = 8;
-    private FoodItem[] items = new FoodItem[MAX];
+    private foodType[] items = new foodType[MAX];
     private int front = 0; // where the front item is
     private int count = 0; // how many items are stored
 
@@ -41,8 +41,8 @@ public class Storage implements StorageOperations {
         return count;
     }
 
-    // add at the FRONT  - O(1)
-    public boolean addFront(FoodItem item) {
+    // add at the FRONT 
+    public boolean addFront(foodType item) {
         if (isFull()) {
             return false;
         }
@@ -52,40 +52,40 @@ public class Storage implements StorageOperations {
         return true;
     }
 
-    // Remove from the front - O(1)
-    public FoodItem removeFront() {
+    // Remove from the front ss
+    public foodType removeFront() {
         if (isEmpty()) {
             return null;
         }
-        FoodItem item = items[front];
+        foodType item = items[front];
         items[front] = null;
         front = (front + 1) % MAX;
         count--;
         return item;
     }
     // remove from the back O(1)
-    public FoodItem removeBack() {
+    public foodType removeBack() {
         if (isEmpty()) {
             return null;
         }
         int back = (front + count - 1) % MAX;
-        FoodItem item = items[back];
+        foodType item = items[back];
         items[back] = null;
         count--;
         return item;
     }
 
     // Look at the front item
-    public FoodItem peek() {
+    public foodType peek() {
         if (isEmpty()) {
             return null;
         }
         return items[front];
     }
     // linear search
-     public FoodItem search(String name) {
+     public foodType search(String name) {
         for (int i = 0; i < count; i++) {
-            FoodItem item = items[(front + i) % MAX];
+            foodType item = items[(front + i) % MAX];
             if (item.getName().equalsIgnoreCase(name)) {
                 return item;
             }

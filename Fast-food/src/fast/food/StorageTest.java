@@ -15,7 +15,7 @@ public class StorageTest {
     static int passed = 0;
     static int total = 0;
 
-    // Print the fail or success for everytime that is check =
+    // Print the fail or success for everytime that is check 
     static void check(String description, boolean condition) {
         total++;
         if (condition) {
@@ -26,12 +26,13 @@ public class StorageTest {
         }
     }
 
-     static FoodItem item(String name) {
-        return new FoodItem(name, 100, LocalDate.now().plusDays(3));
+     static foodType item(String name) {
+        return new foodType(name, 100, LocalDate.now().plusDays(3));
     }
 
     public static void main(String[] args) {
 
+        //every message to check the storage and messages after the input
         System.out.println("--- Storage: empty storage ---");
         Storage s = new Storage();
         check("new storage is empty", s.isEmpty());
@@ -41,7 +42,7 @@ public class StorageTest {
         check("search on empty returns null", s.search("Pizza") == null);
 
         System.out.println("--- Storage: add and remove ---");
-        s.addFront(item("Pizza"));
+        s.addFront(item("Pizza")); //add in the front
         s.addFront(item("Burger"));
         check("size is 2", s.size() == 2);
         check("peek shows the last added (Burger)", s.peek().getName().equals("Burger"));
@@ -51,11 +52,12 @@ public class StorageTest {
 
          System.out.println("--- Storage: full (max 8) ---");
         s = new Storage();
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 1; i <= 8; i++) { //for the check if the array is under 8
             s.addFront(item("A" + i));
         }
+        //print messages after the check
         check("storage is full after 8 items", s.isFull());
-        check("adding a 9th item returns false", s.addFront(item("A9")) == false);
+        check("adding a 9th item returns false", s.addFront(item("A9")) == false); //for example if there is a 9 item
         check("size stays 8", s.size() == 8);
 
         //storage data in a circular array, with a size of 8
@@ -72,11 +74,12 @@ public class StorageTest {
 
         //storage products by name 
         System.out.println("--- Storage: search ---");
-        check("search finds B2", s.search("B2") != null);
+        check("search finds B2", s.search("B2") != null); //search the products in the storage
         check("search ignores upper/lower case", s.search("b2") != null);
         check("search returns null if not found", s.search("Cake") == null);
 
         //valid products
+        //after every check and valid the messages will be printed
         System.out.println("--- Input validation ---");
         check("'pizza' is a valid name", FastFood.validName("pizza").equals("Pizza"));
         check("'Cake' is not a valid name", FastFood.validName("Cake") == null);
@@ -89,12 +92,14 @@ public class StorageTest {
         check("date in the past is not valid", FastFood.validDate(LocalDate.now().minusDays(1).toString()) == null);
         check("wrong date format is not valid", FastFood.validDate("2026-13-45") == null);
 
-        
+        //inheritnace to wrap around and make the variblae work in the foodtype class
         System.out.println("--- Inheritance ---");
-        check("FoodItem is a Food", item("Pizza") instanceof Food);
-        check("FoodItem is a FoodItem", item("Pizza") instanceof FoodItem);
+        check("Food is a Food", item("Pizza") instanceof foodType);
+        check("Food is a FoodItem", item("Pizza") instanceof foodType);
         check("Storage implements StorageOperations", new Storage() instanceof StorageOperations);
-
+           //printed message if everything is fine
         System.out.println("\nResult: " + passed + " / " + total + " tests passed");
     }
+
+
 }

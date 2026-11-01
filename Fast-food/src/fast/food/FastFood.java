@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class FastFood {
   
-   
+ 
     /**
      * @param args the command line arguments
      */
@@ -24,6 +24,7 @@ public class FastFood {
         boolean running = true;
    
 while (running) {  //while for the chossing of the message depeding in the case
+              //options that can be picked by the user and it will be repeat it until the users pick one
             System.out.println("\n--- FOOD STORAGE MENU ---");
             System.out.println("1. Add food item");
             System.out.println("2. Remove from front");
@@ -35,23 +36,23 @@ while (running) {  //while for the chossing of the message depeding in the case
             System.out.print("Choose: ");
             
             String choice = scanner.nextLine().trim(); // read the choice that was made
-    
+                                                       //trim remove extra spaces
    switch (choice) {
                 case "1":
                     addFood(scanner, storage);
                     break;
-                case "2":
+                case "2": //remove front and returns the remove item or null is empty
                     showRemoved(storage.removeFront(), "front");
                     break;
                 case "3":
                     showRemoved(storage.removeBack(), "back");
                     break;
-                case "4":
+                case "4": //peek() for the from item and if not remove it
                     foodType top = storage.peek();
                     if (top == null) {
-                        System.out.println("Empty");
+                        System.out.println("Empty"); //to manage the empty storage
                     } else {
-                        System.out.println("Top " + top);
+                        System.out.println("Top" + top);
                     }
                     break;
                 case "5":
@@ -71,7 +72,7 @@ while (running) {  //while for the chossing of the message depeding in the case
                     System.out.println("Goodbye!");
                     running = false;
                     break;
-                default:
+                default: //this is for any other input coming from the user
                     System.out.println("Choice is not correct");
             }
         }
@@ -92,6 +93,8 @@ scanner.close();
 
 // Asking for the details for the check and then add
     static void addFood(Scanner scanner, Storage storage) {
+       //if to check the capacity 
+       
         if (storage.isFull()) {
             System.out.println("Storage is full!");
             return;
@@ -99,6 +102,7 @@ scanner.close();
 
         System.out.print("Name (Burger, Pizza, Fries, Sandwich, Hotdog): ");
         String name = validName(scanner.nextLine().trim());
+        //after every if the proper message will be print
         if (name == null) {
             System.out.println("Invalid food name!");
             return;
@@ -113,16 +117,18 @@ scanner.close();
 
         System.out.print("Best-before (YYYY-MM-DD, max 2 weeks): ");
         LocalDate date = validDate(scanner.nextLine().trim());
+      
         if (date == null) {
             System.out.println("Date is not valid. Use YYYY-MM-DD, using 2 weeks from today.");
             return;
         }
-
+//if the inputsare valid the item will be added 
         storage.addFront(new foodType(name, weight, date));
         System.out.println(name + " added.");
 }
 
 // Returns the food name, or null if it is not one of the 5 foods
+    
     static String validName(String text) {
         String[] foods = {"Burger", "Pizza", "Fries", "Sandwich", "Hotdog"};
         for (String food : foods) {
@@ -136,12 +142,12 @@ scanner.close();
     // Returns the weight, or -1 if it is not a number above 0
     static double validWeight(String text) {
         try {
-            double weight = Double.parseDouble(text);
+            double weight = Double.parseDouble(text); //throws error for abc
             if (weight > 0) {
                 return weight;
             }
         } catch (NumberFormatException e) {
-        }
+        } //not a number so fall through to return -1
         return -1;
     }
 
@@ -152,8 +158,8 @@ scanner.close();
             if (!date.isBefore(LocalDate.now()) && !date.isAfter(LocalDate.now().plusWeeks(2))) {
                 return date;
             }
-        } catch (Exception e) {
-        }
+        } catch (Exception e) { //in case if there is any  wrong format like the date
+        } 
         return null;
     }
 
